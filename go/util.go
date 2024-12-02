@@ -7,6 +7,14 @@ import (
 	"os"
 )
 
+var debug = true
+
+func log(a ...any) {
+	if debug {
+		fmt.Println(a...)
+	}
+}
+
 func readLines(day uint8) iter.Seq[string] {
 	assert(day <= 25)
 	return func(yield func(string) bool) {

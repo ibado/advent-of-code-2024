@@ -22,17 +22,14 @@ func day1Part2(lines iter.Seq[string]) int64 {
 	left, right := parseInput(lines)
 
 	m := make(map[int64]int64, len(left))
-	for _, nl := range left {
-		for _, nr := range right {
-			if nl == nr {
-				m[nl] += 1
-			}
-		}
+	for _, nr := range right {
+		m[nr] += 1
 	}
 	var res int64 = 0
-	for k, v := range m {
-		res += k * v
+	for _, nl := range left {
+		res += nl * m[nl]
 	}
+
 	return res
 }
 

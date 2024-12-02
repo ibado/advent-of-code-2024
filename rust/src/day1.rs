@@ -15,16 +15,12 @@ pub fn day1_part1(lines: impl Iterator<Item = String>) -> i64 {
 pub fn day1_part2(lines: impl Iterator<Item = String>) -> i64 {
     let (left, right) = parse_input(lines);
     let mut m = HashMap::new();
-    for l in left.iter() {
-        for r in right.iter() {
-            if l == r {
-                m.entry(l).and_modify(|e| *e += 1).or_insert(1);
-            }
-        }
+    for r in right.iter() {
+        m.entry(r).and_modify(|e| *e += 1).or_insert(1);
     }
     let mut res = 0;
-    for (k, v) in m {
-        res += k * v;
+    for l in left.iter() {
+        res += l * m.get(l).unwrap_or(&0);
     }
     res
 }

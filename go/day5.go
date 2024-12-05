@@ -16,13 +16,11 @@ func day5Part1(lines iter.Seq[string]) int64 {
 	for _, page := range pages {
 		valid := true
 		for _, rule := range rules {
-			if slices.Contains(page, rule.first) && slices.Contains(page, rule.second) {
-				fidx := slices.Index(page, rule.first)
-				sidx := slices.Index(page, rule.second)
-				if fidx > sidx {
-					valid = false
-					break
-				}
+			fidx := slices.Index(page, rule.first)
+			sidx := slices.Index(page, rule.second)
+			if fidx != -1 && sidx != -1 && fidx > sidx {
+				valid = false
+				break
 			}
 		}
 		if valid {
@@ -38,28 +36,26 @@ func day5Part2(lines iter.Seq[string]) int64 {
 	var sum int64 = 0
 	for _, page := range pages {
 		for _, rule := range rules {
-			if slices.Contains(page, rule.first) && slices.Contains(page, rule.second) {
-				fidx := slices.Index(page, rule.first)
-				sidx := slices.Index(page, rule.second)
-				if fidx > sidx {
-					slices.SortFunc(page, func(a, b int64) int {
-						idx := slices.IndexFunc(rules, func(r Rule) bool {
-							return r.first == a && r.second == b || r.first == b && r.second == a
-						})
-						if idx != -1 {
-							rule := rules[idx]
-							if rule.first == a {
-								return -1
-							} else {
-								return 1
-							}
-
-						}
-						return 0
+			fidx := slices.Index(page, rule.first)
+			sidx := slices.Index(page, rule.second)
+			if fidx != -1 && sidx != -1 && fidx > sidx {
+				slices.SortFunc(page, func(a, b int64) int {
+					idx := slices.IndexFunc(rules, func(r Rule) bool {
+						return r.first == a && r.second == b || r.first == b && r.second == a
 					})
-					sum += page[len(page)/2]
-					break
-				}
+					if idx != -1 {
+						rule := rules[idx]
+						if rule.first == a {
+							return -1
+						} else {
+							return 1
+						}
+
+					}
+					return 0
+				})
+				sum += page[len(page)/2]
+				break
 			}
 		}
 	}

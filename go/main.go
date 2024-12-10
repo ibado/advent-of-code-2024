@@ -19,4 +19,19 @@ func main() {
 
 	fmt.Printf("day5 part1: %d\n", day5Part1(readLines(5)))
 	fmt.Printf("day5 part2: %d\n", day5Part2(readLines(5)))
+
+	fmt.Printf("day6 part1: %d\n", day6Part1(readLines(6)))
+	fmt.Printf("day6 part2: %d\n", day6Part2(readLines(6)))
+
+	fmt.Printf("day7 part1: %d\n", day7Part1(readLines(7)))
+	fmt.Printf("day7 part2: %d\n", day7Part2(readLines(7)))
+
+	fmt.Printf("day8 part1: %d\n", day8Part1(readLines(8)))
+	fmt.Printf("day8 part2: %d\n", day8Part2(readLines(8)))
+
+	fmt.Printf("day9 part1: %d\n", day9Part1(readLines(9)))
+	fmt.Printf("day9 part2: %d\n", day9Part2(readLines(9)))
+
+	fmt.Printf("day10 part1: %d\n", day10Part1(readLines(10)))
+	fmt.Printf("day10 part2: %d\n", day10Part2(readLines(10)))
 }

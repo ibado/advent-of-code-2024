@@ -36,14 +36,6 @@ func day4Part2(lines iter.Seq[string]) int {
 	return count
 }
 
-func parseMatrix(lines iter.Seq[string]) [][]byte {
-	var mx [][]byte
-	for l := range lines {
-		mx = append(mx, []byte(l))
-	}
-	return mx
-}
-
 func searchPart1(mx [][]byte, i int, j int) int {
 	count := 0
 	// search down

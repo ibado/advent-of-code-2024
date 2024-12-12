@@ -5,8 +5,8 @@ import (
 	"slices"
 )
 
-func day2Part1(lines iter.Seq[string]) int64 {
-	var count int64 = 0
+func day2Part1(lines iter.Seq[string]) int {
+	count := 0
 	for line := range lines {
 		levels := parseNums([]byte(line))
 		if isSafe(levels) {
@@ -32,7 +32,7 @@ func day2Part2(lines iter.Seq[string]) int64 {
 
 }
 
-func isUnsafe(l int64, asc bool) bool {
+func isUnsafe(l int, asc bool) bool {
 	if asc {
 		if l >= 0 || l < -3 {
 			return true
@@ -45,7 +45,7 @@ func isUnsafe(l int64, asc bool) bool {
 	return false
 }
 
-func isSafe(levels []int64) bool {
+func isSafe(levels []int) bool {
 	diff := levels[0] - levels[1]
 	if diff == 0 || abs(diff) > 3 {
 		return false

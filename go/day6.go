@@ -105,6 +105,7 @@ func day6Part2(lines iter.Seq[string]) int {
 	return len(mp)
 }
 
+// TODO: clean up this mess, isLoop is almost the same as traverseMap
 func isLoop(mx [][]byte, start Point) bool {
 	i := start.x
 	j := start.y

@@ -17,6 +17,7 @@ func day8Part1(lines iter.Seq[string]) int {
 				dy := abs(a1.y - a2.y)
 				var p1 Point
 				var p2 Point
+				// TODO: extract this operations into a methdod?
 				if a1.x < a2.x {
 					p1.x = a1.x - dx
 					p2.x = a2.x + dx

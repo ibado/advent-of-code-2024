@@ -5,10 +5,10 @@ import (
 	"regexp"
 )
 
-func day3Part1(lines iter.Seq[string]) int64 {
+func day3Part1(lines iter.Seq[string]) int {
 	var mulReg = regexp.MustCompile(`mul\(\d+,\d+\)`)
 
-	var res int64 = 0
+	res := 0
 	for l := range lines {
 		for _, mul := range mulReg.FindAll([]byte(l), -1) {
 			operands := parseNums(mul)
@@ -19,10 +19,10 @@ func day3Part1(lines iter.Seq[string]) int64 {
 	return res
 }
 
-func day3Part2(lines iter.Seq[string]) int64 {
+func day3Part2(lines iter.Seq[string]) int {
 	var mulReg = regexp.MustCompile(`mul\(\d+,\d+\)|don't\(\)|do\(\)`)
 
-	var res int64 = 0
+	res := 0
 	do := true
 	for l := range lines {
 		ops := mulReg.FindAll([]byte(l), -1)

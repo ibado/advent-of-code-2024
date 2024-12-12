@@ -103,11 +103,11 @@ func isAlpha(n byte) bool {
 	return 'a' <= n && n <= 'z' || 'A' <= n && n <= 'Z'
 }
 
-func concat(n int64, c byte) int64 {
+func concat(n int, c byte) int {
 	if n == 0 {
-		return int64(c - '0')
+		return int(c - '0')
 	} else {
-		return n*10 + int64(c-'0')
+		return n*10 + int(c-'0')
 	}
 }
 
@@ -131,13 +131,13 @@ func findPoints[T int | byte](mx [][]T, val T) []Point {
 	return points
 }
 
-func parseNums(line []byte) []int64 {
-	var s []int64
+func parseNums(line []byte) []int {
+	var s []int
 	i := 0
 	for i < len(line) {
 		isNeg := line[i] == '-'
 		if isDigit(line[i]) || isNeg {
-			var n int64 = 0
+			var n int = 0
 			if isNeg {
 				i++
 			}

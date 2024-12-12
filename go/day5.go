@@ -6,13 +6,13 @@ import (
 )
 
 type Rule struct {
-	first, second int64
+	first, second int
 }
 
-func day5Part1(lines iter.Seq[string]) int64 {
+func day5Part1(lines iter.Seq[string]) int {
 	rules, pages := parseInputDay5(lines)
 
-	var sum int64 = 0
+	sum := 0
 	for _, page := range pages {
 		valid := true
 		for _, rule := range rules {
@@ -30,16 +30,16 @@ func day5Part1(lines iter.Seq[string]) int64 {
 	return sum
 }
 
-func day5Part2(lines iter.Seq[string]) int64 {
+func day5Part2(lines iter.Seq[string]) int {
 	rules, pages := parseInputDay5(lines)
 
-	var sum int64 = 0
+	sum := 0
 	for _, page := range pages {
 		for _, rule := range rules {
 			fidx := slices.Index(page, rule.first)
 			sidx := slices.Index(page, rule.second)
 			if fidx != -1 && sidx != -1 && fidx > sidx {
-				slices.SortFunc(page, func(a, b int64) int {
+				slices.SortFunc(page, func(a, b int) int {
 					idx := slices.IndexFunc(rules, func(r Rule) bool {
 						return r.first == a && r.second == b || r.first == b && r.second == a
 					})
@@ -62,9 +62,9 @@ func day5Part2(lines iter.Seq[string]) int64 {
 	return sum
 }
 
-func parseInputDay5(lines iter.Seq[string]) ([]Rule, [][]int64) {
+func parseInputDay5(lines iter.Seq[string]) ([]Rule, [][]int) {
 	var rules []Rule
-	var pages [][]int64
+	var pages [][]int
 	rulesEnd := false
 	for l := range lines {
 		if l == "" {

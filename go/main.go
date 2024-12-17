@@ -46,4 +46,13 @@ func main() {
 
 	fmt.Printf("day14 part1: %d\n", day14Part1(readLines(14)))
 	fmt.Printf("day14 part2: %d\n", day14Part2(readLines(14)))
+
+	fmt.Printf("day15 part1: %d\n", day15Part1(readLines(15)))
+	fmt.Printf("day15 part2: %d\n", day15Part2(readLines(15)))
+
+	fmt.Printf("day16 part1: %d\n", day16Part1(readLines(16)))
+	fmt.Printf("day16 part2: %d\n", day16Part2(readLines(16)))
+
+	fmt.Printf("day17 part1: %s\n", day17Part1(readLines(17)))
+	fmt.Printf("day17 part2: %d\n", day17Part2(readLines(17)))
 }

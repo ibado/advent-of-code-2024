@@ -9,7 +9,9 @@ import (
 	"strings"
 )
 
-func day17Part1(lines iter.Seq[string]) string {
+type day17 struct{}
+
+func (d day17) Part1(lines iter.Seq[string]) any {
 	next, stop := iter.Pull(lines)
 	defer stop()
 	regAInput, _ := next()
@@ -33,7 +35,7 @@ func day17Part1(lines iter.Seq[string]) string {
 	return s.String()
 }
 
-func day17Part2(lines iter.Seq[string]) int {
+func (d day17) Part2(lines iter.Seq[string]) any {
 	next, stop := iter.Pull(lines)
 	defer stop()
 	// ignore the first 4 lines

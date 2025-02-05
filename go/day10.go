@@ -4,7 +4,9 @@ import (
 	"iter"
 )
 
-func day10Part1(lines iter.Seq[string]) int {
+type day10 struct{}
+
+func (d day10) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	zeros := findPoints(mx, '0')
 	sum := 0
@@ -16,7 +18,7 @@ func day10Part1(lines iter.Seq[string]) int {
 	return sum
 }
 
-func day10Part2(lines iter.Seq[string]) int {
+func (d day10) Part2(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	zeros := findPoints(mx, '0')
 	sum := 0

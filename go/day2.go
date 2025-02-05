@@ -5,7 +5,9 @@ import (
 	"slices"
 )
 
-func day2Part1(lines iter.Seq[string]) int {
+type day2 struct{}
+
+func (d day2) Part1(lines iter.Seq[string]) any {
 	count := 0
 	for line := range lines {
 		levels := parseNums([]byte(line))
@@ -16,8 +18,8 @@ func day2Part1(lines iter.Seq[string]) int {
 	return count
 }
 
-func day2Part2(lines iter.Seq[string]) int64 {
-	var count int64 = 0
+func (d day2) Part2(lines iter.Seq[string]) any {
+	count := 0
 	for line := range lines {
 		levels := parseNums([]byte(line))
 		for i := 0; i < len(levels); i++ {

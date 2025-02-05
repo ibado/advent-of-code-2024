@@ -19,7 +19,9 @@ func rotateRight(dir byte) byte {
 	return dirs[(idx+1)%len(dirs)]
 }
 
-func day6Part1(lines iter.Seq[string]) int {
+type day6 struct{}
+
+func (d day6) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	start := findPoints(mx, '^')[0]
 	i := start.x
@@ -79,7 +81,7 @@ func day6Part1(lines iter.Seq[string]) int {
 	return len(m) + 1
 }
 
-func day6Part2(lines iter.Seq[string]) int {
+func (d day6) Part2(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	start := findPoints(mx, '^')[0]
 

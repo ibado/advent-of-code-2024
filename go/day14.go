@@ -7,7 +7,9 @@ import (
 const N = 101
 const M = 103
 
-func day14Part1(lines iter.Seq[string]) int {
+type day14 struct{}
+
+func (d day14) Part1(lines iter.Seq[string]) any {
 	m := make(map[Point]int)
 	for l := range lines {
 		nums := parseNums([]byte(l))
@@ -30,7 +32,7 @@ func day14Part1(lines iter.Seq[string]) int {
 	return topLeft * topRight * bottomLeft * bottomRight
 }
 
-func day14Part2(lines iter.Seq[string]) int {
+func (d day14) Part2(lines iter.Seq[string]) any {
 	type Robot struct {
 		p, v Point
 	}

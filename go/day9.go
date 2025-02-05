@@ -4,7 +4,9 @@ import (
 	"iter"
 )
 
-func day9Part1(lines iter.Seq[string]) int {
+type day9 struct{}
+
+func (d day9) Part1(lines iter.Seq[string]) any {
 	next, stop := iter.Pull(lines)
 	defer stop()
 	l, _ := next()
@@ -47,7 +49,7 @@ func day9Part1(lines iter.Seq[string]) int {
 	return sum
 }
 
-func day9Part2(lines iter.Seq[string]) int {
+func (d day9) Part2(lines iter.Seq[string]) any {
 	next, stop := iter.Pull(lines)
 	defer stop()
 	l, _ := next()

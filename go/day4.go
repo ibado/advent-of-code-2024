@@ -7,7 +7,9 @@ import (
 var WORD1 = []byte{'X', 'M', 'A', 'S'}
 var WORD2 = []byte{'M', 'A', 'S'}
 
-func day4Part1(lines iter.Seq[string]) int {
+type day4 struct{}
+
+func (d day4) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	count := 0
 	for i := 0; i < len(mx); i++ {
@@ -18,7 +20,7 @@ func day4Part1(lines iter.Seq[string]) int {
 	return count
 }
 
-func day4Part2(lines iter.Seq[string]) int {
+func (d day4) Part2(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	count := 0
 	for i := 0; i < len(mx)-2; i++ {

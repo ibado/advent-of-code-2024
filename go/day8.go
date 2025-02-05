@@ -4,7 +4,9 @@ import (
 	"iter"
 )
 
-func day8Part1(lines iter.Seq[string]) int {
+type day8 struct{}
+
+func (d day8) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	antenas := findAllAntenas(mx)
 	n := len(mx)
@@ -51,7 +53,7 @@ func day8Part1(lines iter.Seq[string]) int {
 	return len(points)
 }
 
-func day8Part2(lines iter.Seq[string]) int {
+func (d day8) Part2(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	antenas := findAllAntenas(mx)
 	n := len(mx)

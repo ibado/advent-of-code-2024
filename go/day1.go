@@ -5,7 +5,9 @@ import (
 	"slices"
 )
 
-func day1Part1(lines iter.Seq[string]) int {
+type day1 struct{}
+
+func (d day1) Part1(lines iter.Seq[string]) any {
 	left, right := parseInput(lines)
 
 	slices.Sort(left)
@@ -18,7 +20,7 @@ func day1Part1(lines iter.Seq[string]) int {
 	return res
 }
 
-func day1Part2(lines iter.Seq[string]) int {
+func (d day1) Part2(lines iter.Seq[string]) any {
 	left, right := parseInput(lines)
 
 	m := make(map[int]int, len(left))

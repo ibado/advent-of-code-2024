@@ -21,7 +21,9 @@ func (p Point) move(dir byte) Point {
 	return res
 }
 
-func day15Part1(lines iter.Seq[string]) int {
+type day15 struct{}
+
+func (d day15) Part1(lines iter.Seq[string]) any {
 	mx, dirs := parseDay15(lines)
 	robotPoint := findPoints(mx, '@')[0]
 
@@ -61,7 +63,7 @@ func day15Part1(lines iter.Seq[string]) int {
 	return sum
 }
 
-func day15Part2(lines iter.Seq[string]) int {
+func (d day15) Part2(lines iter.Seq[string]) any {
 	mx, dirs := parseDay15(lines)
 	mx = expandMxPart2(mx)
 	robotPoint := findPoints(mx, '@')[0]

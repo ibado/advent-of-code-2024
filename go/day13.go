@@ -12,7 +12,9 @@ type Game struct {
 
 const maxBtnPresses = 100
 
-func day13Part1(lines iter.Seq[string]) int {
+type day13 struct{}
+
+func (d day13) Part1(lines iter.Seq[string]) any {
 	games := parseGames(lines)
 	sum := 0
 	for _, g := range games {
@@ -24,7 +26,7 @@ func day13Part1(lines iter.Seq[string]) int {
 	return sum
 }
 
-func day13Part2(lines iter.Seq[string]) int {
+func (d day13) Part2(lines iter.Seq[string]) any {
 	games := parseGames(lines)
 	sum := 0
 	for _, g := range games {

@@ -2,10 +2,12 @@ package main
 
 import "iter"
 
-func day16Part1(lines iter.Seq[string]) int {
+type day16 struct{}
+
+func (d day16) Part1(lines iter.Seq[string]) any {
 	return 0
 }
 
-func day16Part2(lines iter.Seq[string]) int {
+func (d day16) Part2(lines iter.Seq[string]) any {
 	return 0
 }

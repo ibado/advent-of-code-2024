@@ -15,11 +15,13 @@ type Day7Input struct {
 	target int
 }
 
-func day7Part1(lines iter.Seq[string]) int {
+type day7 struct{}
+
+func (d day7) Part1(lines iter.Seq[string]) any {
 	return solve(operators1, lines)
 }
 
-func day7Part2(lines iter.Seq[string]) int {
+func (d day7) Part2(lines iter.Seq[string]) any {
 	return solve(operators2, lines)
 }
 

@@ -9,7 +9,9 @@ type Rule struct {
 	first, second int
 }
 
-func day5Part1(lines iter.Seq[string]) int {
+type day5 struct{}
+
+func (d day5) Part1(lines iter.Seq[string]) any {
 	rules, pages := parseInputDay5(lines)
 
 	sum := 0
@@ -30,7 +32,7 @@ func day5Part1(lines iter.Seq[string]) int {
 	return sum
 }
 
-func day5Part2(lines iter.Seq[string]) int {
+func (d day5) Part2(lines iter.Seq[string]) any {
 	rules, pages := parseInputDay5(lines)
 
 	sum := 0

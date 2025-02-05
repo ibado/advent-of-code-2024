@@ -6,7 +6,9 @@ import (
 	"strings"
 )
 
-func day19Part1(lines iter.Seq[string]) int {
+type day19 struct{}
+
+func (d day19) Part1(lines iter.Seq[string]) any {
 	towels, patterns := inputDay19(lines)
 	count := 0
 	for _, pattern := range patterns {
@@ -17,7 +19,7 @@ func day19Part1(lines iter.Seq[string]) int {
 	return count
 }
 
-func day19Part2(lines iter.Seq[string]) int {
+func (d day19) Part2(lines iter.Seq[string]) any {
 	towels, patterns := inputDay19(lines)
 	count := 0
 	for _, pattern := range patterns {

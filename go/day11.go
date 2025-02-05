@@ -9,11 +9,13 @@ type StoneBlinks struct {
 	stoneNum, blinks int
 }
 
-func day11Part1(lines iter.Seq[string]) int {
+type day11 struct{}
+
+func (d day11) Part1(lines iter.Seq[string]) any {
 	return solveDay11(lines, 25)
 }
 
-func day11Part2(lines iter.Seq[string]) int {
+func (d day11) Part2(lines iter.Seq[string]) any {
 	return solveDay11(lines, 75)
 }
 

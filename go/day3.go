@@ -5,7 +5,9 @@ import (
 	"regexp"
 )
 
-func day3Part1(lines iter.Seq[string]) int {
+type day3 struct{}
+
+func (d day3) Part1(lines iter.Seq[string]) any {
 	var mulReg = regexp.MustCompile(`mul\(\d+,\d+\)`)
 
 	res := 0
@@ -19,7 +21,7 @@ func day3Part1(lines iter.Seq[string]) int {
 	return res
 }
 
-func day3Part2(lines iter.Seq[string]) int {
+func (d day3) Part2(lines iter.Seq[string]) any {
 	var mulReg = regexp.MustCompile(`mul\(\d+,\d+\)|don't\(\)|do\(\)`)
 
 	res := 0

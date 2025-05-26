@@ -37,16 +37,23 @@ func (d day18) Part2(lines iter.Seq[string]) any {
 		y := nums[1]
 		obstacles = append(obstacles, Point{x, y})
 	}
-	for i := BytesToScan + 1; i < len(obstacles); i++ {
+
+	min := BytesToScan + 1
+	max := len(obstacles)
+	i := (max + min) / 2
+	for i != min {
 		graph := make(map[Point][]Point)
 		fillGridGraph(graph, asMap(obstacles[:i]), Limit)
 		ok, _ := bfs(graph)
-		if !ok {
-			return obstacles[i-1]
+		if ok {
+			min = i
+			i = (i + max) / 2
+		} else {
+			max = i
+			i = (i + min) / 2
 		}
 	}
-
-	panic("unreachable")
+	return obstacles[max-1]
 }
 
 func asMap(s []Point) map[Point]bool {

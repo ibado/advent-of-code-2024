@@ -7,8 +7,35 @@ import (
 	"os"
 )
 
+type Queue[T any] []T
+
+func (q *Queue[T]) Push(elem T) {
+	*q = append(*q, elem)
+}
+
+func (q *Queue[T]) PushSlice(s []T) {
+	*q = append(*q, s...)
+}
+
+func (q *Queue[T]) Pop() T {
+	if len(*q) == 0 {
+		panic("empty queue")
+	}
+	popped := (*q)[0]
+	*q = (*q)[1:]
+	return popped
+}
+
+func (q *Queue[T]) Len() int {
+	return len(*q)
+}
+
 type Point struct {
 	x, y int
+}
+
+func (p Point) String() string {
+	return fmt.Sprint(p.x, ",", p.y)
 }
 
 func (p Point) isInRage(n int) bool {

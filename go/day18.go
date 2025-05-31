@@ -10,7 +10,6 @@ const Limit = 71
 const BytesToScan = 1024
 
 func (d day18) Part1(lines iter.Seq[string]) any {
-	graph := make(map[Point][]Point)
 	obstacles := make(map[Point]bool)
 	idx := 0
 	for l := range lines {
@@ -24,7 +23,7 @@ func (d day18) Part1(lines iter.Seq[string]) any {
 		}
 	}
 
-	fillGridGraph(graph, obstacles, Limit)
+	graph := genGridGraph(obstacles, Limit)
 	_, level := bfs(graph)
 	return level
 }
@@ -42,10 +41,9 @@ func (d day18) Part2(lines iter.Seq[string]) any {
 	max := len(obstacles)
 	i := (max + min) / 2
 	for i != min {
-		graph := make(map[Point][]Point)
-		fillGridGraph(graph, asMap(obstacles[:i]), Limit)
-		ok, _ := bfs(graph)
-		if ok {
+		graph := genGridGraph(asMap(obstacles[:i]), Limit)
+		found, _ := bfs(graph)
+		if found {
 			min = i
 			i = (i + max) / 2
 		} else {
@@ -67,7 +65,7 @@ func asMap(s []Point) map[Point]bool {
 // Starts at 0,0 and search for Limit,Limit
 // returns (true, level) if found it
 // returns (false,   -1) otherwise
-func bfs(graph map[Point][]Point) (bool, int) {
+func bfs(graph map[Point][]Point) (found bool, level int) {
 	seen := make(map[Point]bool)
 	var q Queue[Point]
 	q.Push(Point{0, 0})
@@ -92,7 +90,8 @@ func bfs(graph map[Point][]Point) (bool, int) {
 	return false, -1
 }
 
-func fillGridGraph(graph map[Point][]Point, obs map[Point]bool, size int) {
+func genGridGraph(obs map[Point]bool, size int) map[Point][]Point {
+	graph := make(map[Point][]Point)
 	for i := 0; i < size; i++ {
 		for j := 0; j < size; j++ {
 			p := Point{j, i}
@@ -113,4 +112,5 @@ func fillGridGraph(graph map[Point][]Point, obs map[Point]bool, size int) {
 			}
 		}
 	}
+	return graph
 }

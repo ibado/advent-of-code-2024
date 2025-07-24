@@ -9,6 +9,8 @@ type day18 struct{}
 const Limit = 71
 const BytesToScan = 1024
 
+type Graph map[Point][]Point
+
 func (d day18) Part1(lines iter.Seq[string]) any {
 	obstacles := make(map[Point]bool)
 	idx := 0
@@ -90,8 +92,8 @@ func bfs(graph map[Point][]Point) (found bool, level int) {
 	return false, -1
 }
 
-func genGridGraph(obs map[Point]bool, size int) map[Point][]Point {
-	graph := make(map[Point][]Point)
+func genGridGraph(obs map[Point]bool, size int) Graph {
+	graph := make(Graph)
 	for i := 0; i < size; i++ {
 		for j := 0; j < size; j++ {
 			p := Point{j, i}

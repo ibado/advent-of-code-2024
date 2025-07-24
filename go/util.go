@@ -34,6 +34,10 @@ type Point struct {
 	x, y int
 }
 
+func (p Point) Plus(other Point) Point {
+	return Point{p.x + other.x, p.y + other.y}
+}
+
 func (p Point) String() string {
 	return fmt.Sprint(p.x, ",", p.y)
 }
@@ -106,7 +110,7 @@ func abs[T int64 | int](a T) T {
 	return -a
 }
 
-func min(a, b int64) int64 {
+func min[T int64 | int](a, b T) T {
 	if a < b {
 		return a
 	} else {
@@ -114,7 +118,7 @@ func min(a, b int64) int64 {
 	}
 }
 
-func max(a, b int64) int64 {
+func max[T int64 | int](a, b T) T {
 	if a > b {
 		return a
 	} else {

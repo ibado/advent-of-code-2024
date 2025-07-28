@@ -30,6 +30,8 @@ func (q *Queue[T]) Len() int {
 	return len(*q)
 }
 
+var Dirs = [4]Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+
 type Point struct {
 	x, y int
 }

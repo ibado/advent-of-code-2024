@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aoc2024/ds"
 	"iter"
 )
 
@@ -69,7 +70,7 @@ func asMap(s []Point) map[Point]bool {
 // returns (false,   -1) otherwise
 func bfs(graph map[Point][]Point) (found bool, level int) {
 	seen := make(map[Point]bool)
-	var q Queue[Point]
+	var q ds.Queue[Point]
 	q.Push(Point{0, 0})
 	lvl := 0
 	for q.Len() != 0 {

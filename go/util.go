@@ -7,29 +7,6 @@ import (
 	"os"
 )
 
-type Queue[T any] []T
-
-func (q *Queue[T]) Push(elem T) {
-	*q = append(*q, elem)
-}
-
-func (q *Queue[T]) PushSlice(s []T) {
-	*q = append(*q, s...)
-}
-
-func (q *Queue[T]) Pop() T {
-	if len(*q) == 0 {
-		panic("empty queue")
-	}
-	popped := (*q)[0]
-	*q = (*q)[1:]
-	return popped
-}
-
-func (q *Queue[T]) Len() int {
-	return len(*q)
-}
-
 var Dirs = [4]Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
 
 type Point struct {
@@ -150,6 +127,15 @@ func parseMatrix(lines iter.Seq[string]) [][]byte {
 		mx = append(mx, []byte(l))
 	}
 	return mx
+}
+
+func printMx(mx [][]byte) {
+	for i := 0; i < len(mx); i++ {
+		for j := 0; j < len(mx[0]); j++ {
+			fmt.Print(string(mx[i][j]))
+		}
+		log()
+	}
 }
 
 func findPoints[T int | byte](mx [][]T, val T) []Point {

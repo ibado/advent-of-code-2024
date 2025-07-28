@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"iter"
 	"slices"
 )
@@ -130,13 +129,4 @@ func parseDay15(lines iter.Seq[string]) ([][]byte, []byte) {
 		}
 	}
 	return mx, dirs
-}
-
-func printMx(mx [][]byte) {
-	for i := 0; i < len(mx); i++ {
-		for j := 0; j < len(mx[0]); j++ {
-			fmt.Print(string(mx[i][j]))
-		}
-		log()
-	}
 }

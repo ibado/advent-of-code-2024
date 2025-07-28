@@ -1,13 +1,17 @@
 package main
 
 import (
-	"container/heap"
+	"aoc2024/ds"
 	"iter"
 	"math"
 	"slices"
 )
 
 type day16 struct{}
+
+type DirPoint struct {
+	p, dir Point
+}
 
 func (d day16) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
@@ -62,15 +66,11 @@ func countTiles(parents map[DirPoint][]DirPoint, start DirPoint) int {
 	return len(tiles)
 }
 
-type DirPoint struct {
-	p, dir Point
-}
+func generateGraph(mx [][]byte) ds.WGraph[DirPoint] {
+	g := make(map[DirPoint][]ds.WGraphNode[DirPoint])
 
-func generateGraph(mx [][]byte) WGraph[DirPoint] {
-	g := make(map[DirPoint][]GraphNode[DirPoint])
-
-	newNode := func(p, d Point, weight int) GraphNode[DirPoint] {
-		return GraphNode[DirPoint]{DirPoint{p, d}, weight}
+	newNode := func(p, d Point, weight int) ds.WGraphNode[DirPoint] {
+		return ds.NewNode(DirPoint{p, d}, weight)
 	}
 
 	for i, row := range mx {
@@ -90,70 +90,4 @@ func generateGraph(mx [][]byte) WGraph[DirPoint] {
 	}
 
 	return g
-}
-
-type GraphNode[T any] struct {
-	id     T
-	weight int
-}
-
-type NHeap[T any] []GraphNode[T]
-
-func (nh *NHeap[T]) Push(x any) {
-	*nh = append(*nh, x.(GraphNode[T]))
-}
-
-func (nh *NHeap[T]) Pop() any {
-	assertMsg(len(*nh) > 0, "heap is empty!")
-	lastIdx := len(*nh) - 1
-	last := (*nh)[lastIdx]
-	*nh = (*nh)[:lastIdx]
-	return last
-}
-
-func (nh NHeap[T]) Less(i, j int) bool {
-	return nh[i].weight < nh[j].weight
-}
-
-func (nh NHeap[T]) Swap(i, j int) {
-	tmp := nh[i]
-	nh[i] = nh[j]
-	nh[j] = tmp
-}
-func (nh NHeap[T]) Len() int { return len(nh) }
-
-type WGraph[T comparable] map[T][]GraphNode[T]
-
-func (g WGraph[T]) Dijkstra(src T) (costs map[T]int, parents map[T][]T) {
-	costs = make(map[T]int)
-	parents = make(map[T][]T)
-	var costHeap NHeap[T]
-	heap.Init(&costHeap)
-
-	heap.Push(&costHeap, GraphNode[T]{src, 0})
-	costs[src] = 0
-
-	for costHeap.Len() != 0 {
-		minCostNode := heap.Pop(&costHeap).(GraphNode[T])
-
-		for _, node := range g[minCostNode.id] {
-			newCost := node.weight + minCostNode.weight
-			nodeCost, ok := costs[node.id]
-			if ok && newCost < nodeCost || !ok {
-				costs[node.id] = newCost
-				heap.Push(&costHeap, GraphNode[T]{node.id, newCost})
-				parents[node.id] = []T{minCostNode.id}
-			} else if newCost == nodeCost {
-				parents[node.id] = append(parents[node.id], minCostNode.id)
-			}
-		}
-	}
-
-	return costs, parents
-}
-
-func assertMsg(cond bool, msg string) {
-	if !cond {
-		panic(msg)
-	}
 }

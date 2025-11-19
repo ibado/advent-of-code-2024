@@ -1,16 +1,15 @@
 let part1 input =
   let regexp = Re.Pcre.re {|mul\((\d+),(\d+)\)|} |> Re.compile in
-  let rec muls_aux s pos acc =
+  let rec muls ?(pos = 0) ?(acc = 0) s =
     match Re.exec_opt ~pos regexp s with
     | Some groups ->
         let sum =
           int_of_string (Re.Group.get groups 1)
           * int_of_string (Re.Group.get groups 2)
         in
-        muls_aux s (Re.Group.stop groups 0) (acc + sum)
+        muls s ~pos:(Re.Group.stop groups 0) ~acc:(acc + sum)
     | None -> acc
   in
-  let muls s = muls_aux s 0 0 in
 
   List.fold_left (fun acc it -> acc + muls it) 0 input
 

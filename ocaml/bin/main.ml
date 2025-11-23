@@ -15,4 +15,7 @@ input_day 4 |> Day4.part1 |> printf "day4 part1: %d\n";
 input_day 4 |> Day4.part2 |> printf "day4 part2: %d\n\n";
 
 input_day 5 |> Day5.part1 |> printf "day5 part1: %d\n";
-input_day 5 |> Day5.part2 |> printf "day5 part2: %d\n\n"
+input_day 5 |> Day5.part2 |> printf "day5 part2: %d\n\n";
+
+input_day 6 |> Day6.part1 |> printf "day6 part1: %d\n";
+input_day 6 |> Day6.part2 |> printf "day6 part2: %d\n\n"

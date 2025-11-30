@@ -1,93 +1,27 @@
 package main
 
 import (
+	"aoc2024/ds"
 	"iter"
 	"maps"
 	"slices"
 )
-
-var dirs = []byte{'U', 'R', 'D', 'L'}
-
-type PointDir struct {
-	x, y int
-	dir  byte
-}
-
-func rotateRight(dir byte) byte {
-	idx := slices.Index(dirs, dir)
-	assert(idx >= 0)
-	return dirs[(idx+1)%len(dirs)]
-}
 
 type day6 struct{}
 
 func (d day6) Part1(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	start := findPoints(mx, '^')[0]
-	i := start.x
-	j := start.y
-
-	var dir byte = 'U'
-	m := make(map[Point]int)
-	for {
-		found := true
-		if dir == 'U' {
-			for i = i - 1; i >= 0; i-- {
-				if mx[i][j] == '#' {
-					dir = rotateRight(dir)
-					i++
-					found = false
-					break
-				}
-				m[Point{i, j}] = 1
-			}
-		} else if dir == 'R' {
-			for j = j + 1; j < len(mx); j++ {
-				if mx[i][j] == '#' {
-					dir = rotateRight(dir)
-					j--
-					found = false
-					break
-				}
-				m[Point{i, j}] = 1
-			}
-		} else if dir == 'D' {
-			for i = i + 1; i < len(mx); i++ {
-				if mx[i][j] == '#' {
-					dir = rotateRight(dir)
-					i--
-					found = false
-					break
-				}
-				m[Point{i, j}] = 1
-			}
-		} else if dir == 'L' {
-			for j = j - 1; j >= 0; j-- {
-				if mx[i][j] == '#' {
-					dir = rotateRight(dir)
-					j++
-					found = false
-					break
-				}
-				m[Point{i, j}] = 1
-			}
-		}
-
-		if found {
-			break
-		}
-	}
-
-	return len(m) + 1
+	return len(findSeen(mx, start))
 }
 
 func (d day6) Part2(lines iter.Seq[string]) any {
 	mx := parseMatrix(lines)
 	start := findPoints(mx, '^')[0]
 
-	visited := maps.Keys(traverseMap(mx, start))
+	visited := maps.Keys(findSeen(mx, start))
 
-	mp := make(map[Point]int)
+	loops := 0
 	for v := range visited {
 		if mx[v.x][v.y] == '#' || v.x == start.x && v.y == start.y {
 			continue
@@ -100,155 +34,56 @@ func (d day6) Part2(lines iter.Seq[string]) any {
 
 		mxc[v.x][v.y] = '#'
 		if isLoop(mxc, start) {
-			mp[Point{v.x, v.y}] = 1
+			loops++
 		}
 	}
 
-	return len(mp)
+	return loops
 }
 
-// TODO: clean up this mess, isLoop is almost the same as traverseMap
-func isLoop(mx [][]byte, start Point) bool {
-	i := start.x
-	j := start.y
-	var dir byte = 'U'
-	m := make([]bool, len(mx)*len(mx)*4)
-	for {
-		found := true
-		if dir == 'U' {
-			for i = i - 1; i >= 0; i-- {
-				if mx[i][j] == '#' {
-					dir = 'R'
-					i++
-					found = false
-					break
-				}
-				h := (i*len(mx)+j)*4 + 0
-				if m[h] {
-					return true
-				}
-				m[h] = true
-
-			}
-		} else if dir == 'R' {
-			for j = j + 1; j < len(mx); j++ {
-				if mx[i][j] == '#' {
-					dir = 'D'
-					j--
-					found = false
-					break
-				}
-
-				h := (i*len(mx)+j)*4 + 1
-				if m[h] {
-					return true
-				}
-				m[h] = true
-			}
-		} else if dir == 'D' {
-			for i = i + 1; i < len(mx); i++ {
-				if mx[i][j] == '#' {
-					dir = 'L'
-					i--
-					found = false
-					break
-				}
-				h := (i*len(mx)+j)*4 + 2
-				if m[h] {
-					return true
-				}
-				m[h] = true
-			}
-		} else if dir == 'L' {
-			for j = j - 1; j >= 0; j-- {
-				if mx[i][j] == '#' {
-					dir = 'U'
-					j++
-					found = false
-					break
-				}
-				h := (i*len(mx)+j)*4 + 3
-				if m[h] {
-					return true
-				}
-				m[h] = true
-			}
+func findSeen(mx [][]byte, start Point) ds.Set[Point] {
+	seen := ds.Set[Point]{}
+	seen.Add(start)
+	dir := Point{-1, 0}
+	n := start
+	np := start.Plus(dir)
+	for np.isInRage(len(mx)) {
+		if mx[np.x][np.y] == '#' {
+			np = n
+			dir = dir.RotateRight()
+		} else {
+			seen.Add(np)
+			n = np
+			np = np.Plus(dir)
 		}
+	}
+	return seen
+}
 
-		if found {
-			break
+type pdir struct {
+	p, dir Point
+}
+
+func isLoop(mx [][]byte, start Point) bool {
+	// using a bool slice since Set[PointDir] aka map[PointDir]struct{} is too slow
+	seen := make([]bool, len(mx)*len(mx)*4)
+	dir := Point{-1, 0}
+	n := start
+	np := start.Plus(dir)
+	for np.isInRage(len(mx)) {
+		if mx[np.x][np.y] == '#' {
+			np = n
+			dir = dir.RotateRight()
+		} else {
+			idx := (np.x*len(mx)+np.y)*4 + slices.Index(Dirs, dir)
+			if seen[idx] {
+				return true
+			}
+			seen[idx] = true
+			n = np
+			np = np.Plus(dir)
 		}
 	}
 
 	return false
-}
-
-func traverseMap(mx [][]byte, start Point) map[PointDir]byte {
-	i := start.x
-	j := start.y
-	var dir byte = 'U'
-	m := make(map[PointDir]byte)
-	for {
-		found := true
-		if dir == 'U' {
-			for i = i - 1; i >= 0; i-- {
-				if mx[i][j] == '#' {
-					dir = 'R'
-					i++
-					found = false
-					break
-				}
-				if m[PointDir{i, j, dir}] == 1 {
-					return nil
-				}
-				m[PointDir{i, j, dir}] = 1
-
-			}
-		} else if dir == 'R' {
-			for j = j + 1; j < len(mx); j++ {
-				if mx[i][j] == '#' {
-					dir = 'D'
-					j--
-					found = false
-					break
-				}
-				if m[PointDir{i, j, dir}] == 1 {
-					return nil
-				}
-				m[PointDir{i, j, dir}] = 1
-			}
-		} else if dir == 'D' {
-			for i = i + 1; i < len(mx); i++ {
-				if mx[i][j] == '#' {
-					dir = 'L'
-					i--
-					found = false
-					break
-				}
-				if m[PointDir{i, j, dir}] == 1 {
-					return nil
-				}
-				m[PointDir{i, j, dir}] = 1
-			}
-		} else if dir == 'L' {
-			for j = j - 1; j >= 0; j-- {
-				if mx[i][j] == '#' {
-					dir = 'U'
-					j++
-					found = false
-					break
-				}
-				if m[PointDir{i, j, dir}] == 1 {
-					return nil
-				}
-				m[PointDir{i, j, dir}] = 1
-			}
-		}
-
-		if found {
-			break
-		}
-	}
-
-	return m
 }

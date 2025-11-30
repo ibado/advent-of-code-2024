@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var Dirs = [4]Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+var Dirs = []Point{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
 
 type Point struct {
 	x, y int
@@ -15,6 +15,10 @@ type Point struct {
 
 func (p Point) Plus(other Point) Point {
 	return Point{p.x + other.x, p.y + other.y}
+}
+
+func (p Point) Minus(other Point) Point {
+	return Point{p.x - other.x, p.y - other.y}
 }
 
 func (p Point) String() string {
@@ -39,6 +43,10 @@ func (p Point) Right() Point {
 
 func (p Point) Left() Point {
 	return Point{p.x, p.y - 1}
+}
+
+func (p Point) RotateRight() Point {
+	return Point{p.y, -p.x}
 }
 
 var debug = true
